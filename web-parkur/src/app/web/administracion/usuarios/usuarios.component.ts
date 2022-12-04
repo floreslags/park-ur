@@ -3,6 +3,9 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort,Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { AdministracionService } from 'src/app/services/administracion.service';
+import { MatDialog,MAT_DIALOG_DATA,MatDialogRef } from '@angular/material/dialog';
+import { PerfilUsuarioComponent } from '../perfil-usuario/perfil-usuario.component';
+import swal from'sweetalert2';
 
 @Component({
   selector: 'app-usuarios',
@@ -27,7 +30,8 @@ export class UsuariosComponent implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(
-    private administracion:AdministracionService
+    private administracion:AdministracionService,
+    private dialog:MatDialog
   ) { }
 
   ngAfterViewInit() {
@@ -72,5 +76,98 @@ export class UsuariosComponent implements OnInit {
       this.menu = false;
     }
   }
+
+  addUsuario(){
+    const user = this.dialog.open(PerfilUsuarioComponent,{
+      data:{
+        title:'Perfil del usuario',
+        boton:'Guardar'
+      }
+    });
+
+    user.afterClosed().subscribe((res:any)=>{
+
+      if(res !== undefined){
+        console.log(res)
+        this.saveUsuario(res)
+      }
+
+    })
+
+  }
+
+  editUsuario(item:any){
+    
+    const user = this.dialog.open(PerfilUsuarioComponent,{
+      data:{
+        title:'Perfil del usuario',
+        boton:'Actualizar',
+        card:item
+      }
+    });
+
+    user.afterClosed().subscribe((res:any)=>{
+
+      if(res !== undefined){
+        console.log(res)
+        res.usuario_id = item.usuario_id
+        this.updateUsuario(res)
+      }
+
+    })
+
+  }
+
+  saveUsuario(item:any){
+    this.administracion.saveUsuario(item).subscribe((res:any)=>{
+      if(res.error === false){
+        swal.fire({
+          timer:2000,
+          text:res.message
+        })
+      }else{
+        swal.fire({
+          timer:2000,
+          text:res.message
+        })
+
+      }
+    })
+  }
+
+  updateUsuario(item:any){
+    this.administracion.updateUsuario(item).subscribe((res:any)=>{
+      if(res.error === false){
+        swal.fire({
+          timer:2000,
+          text:res.message
+        })
+      }else{
+        swal.fire({
+          timer:2000,
+          text:res.message
+        })
+
+      }
+    })
+  }
+  deleteUsuario(item:any){
+    this.administracion.deleteUsuario(item).subscribe((res:any)=>{
+      if(res.error === false){
+        swal.fire({
+          timer:2000,
+          text:res.message
+        })
+      }else{
+        swal.fire({
+          timer:2000,
+          text:res.message
+        })
+
+      }
+    })
+  }
+
+
 
 }

@@ -7,8 +7,9 @@
 
     <div class="w-full flex flex-col gap-4 p-4">
 
-        <div class="flex">
+        <div class="flex items-center justify-between">
             <span class="text-primary text-2xl font-bold">Usuarios</span>
+            <button (click)="addUsuario()" mat-button class="p-2 bg-primary text-white">Nuevo</button>
         </div>
 
         <div class="flex p-4 bg-white h-full rounded-lg">
@@ -25,9 +26,6 @@
 
                     <!--TABLA TODOS-->
                     <div class="flex flex-col w-full bg-white rounded-lg p-4 h-full">
-                        <div class="flex justify-end">
-                            <button mat-button class="p-2 bg-primary text-white">Nuevo</button>
-                        </div>
 
                         <mat-form-field>
                             <mat-label>Filter</mat-label>
@@ -96,14 +94,15 @@
 
                                 <div class="rounded-md flex items-center gap-x-4">
 
-                                  <a class="p-2 rounded-md hover:bg-primary flex items-center justify-center">
+                                  <a (click)="editUsuario(element)" class="p-2 rounded-md hover:bg-primary flex items-center justify-center">
                                     <mat-icon class="text-amber-500" matTooltip="Editar Usuario">edit</mat-icon>
                                   </a>
-                                  <a class="p-2 rounded-md hover:bg-primary flex items-center justify-center">
+                                  <a (click)="deleteUsuario(element)" class="p-2 rounded-md hover:bg-primary flex items-center justify-center">
                                     <mat-icon class="text-pink-500" matTooltip="Eliminar Usuario">delete</mat-icon>
                                   </a>
                                 </div>
                         
+                                
                                 
                               </td>
                             </ng-container>
@@ -134,10 +133,6 @@
 
                                         <!--TABLA ACTIVOS-->
                                         <div class="flex flex-col w-full bg-white rounded-lg p-4 h-full">
-                                          <div class="flex justify-end">
-                                              <button mat-button class="p-2 bg-primary text-white">Nuevo</button>
-                                          </div>
-                  
                                           <mat-form-field>
                                               <mat-label>Filter</mat-label>
                                               <input matInput (keyup)="applyFilter($event)" placeholder="Ingrese el usuario" #input>
@@ -205,10 +200,10 @@
                   
                                                   <div class="rounded-md flex items-center gap-x-4">
                   
-                                                    <a class="p-2 rounded-md hover:bg-primary flex items-center justify-center">
+                                                    <a (click)="editUsuario(element)"  class="p-2 rounded-md hover:bg-primary flex items-center justify-center">
                                                       <mat-icon class="text-amber-500" matTooltip="Editar Usuario">edit</mat-icon>
                                                     </a>
-                                                    <a class="p-2 rounded-md hover:bg-primary flex items-center justify-center">
+                                                    <a (click)="deleteUsuario(element)" class="p-2 rounded-md hover:bg-primary flex items-center justify-center">
                                                       <mat-icon class="text-pink-500" matTooltip="Eliminar Usuario">delete</mat-icon>
                                                     </a>
                                                   </div>
@@ -242,9 +237,6 @@
 
                     <!--TABLA EXPIRADOS-->
                     <div class="flex flex-col w-full bg-white rounded-lg p-4 h-full">
-                      <div class="flex justify-end">
-                          <button mat-button class="p-2 bg-primary text-white">Nuevo</button>
-                      </div>
 
                       <mat-form-field>
                           <mat-label>Filter</mat-label>
@@ -313,10 +305,10 @@
 
                               <div class="rounded-md flex items-center gap-x-4">
 
-                                <a class="p-2 rounded-md hover:bg-primary flex items-center justify-center">
+                                <a (click)="editUsuario(element)" class="p-2 rounded-md hover:bg-primary flex items-center justify-center">
                                   <mat-icon class="text-amber-500" matTooltip="Editar Usuario">edit</mat-icon>
                                 </a>
-                                <a class="p-2 rounded-md hover:bg-primary flex items-center justify-center">
+                                <a (click)="deleteUsuario(element)" class="p-2 rounded-md hover:bg-primary flex items-center justify-center">
                                   <mat-icon class="text-pink-500" matTooltip="Eliminar Usuario">delete</mat-icon>
                                 </a>
                               </div>

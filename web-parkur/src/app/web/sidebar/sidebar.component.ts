@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import swal from'sweetalert2';
 
 @Component({
   selector: 'app-sidebar',
@@ -43,6 +44,10 @@ export class SidebarComponent implements OnInit {
   
   salir(){
     localStorage.clear()
+    swal.fire({
+      timer:2000,
+      text:'¡La sesión se cerró corrctamente!'
+    })
     this.router.navigate(['/auth'])
   }
 

@@ -1,6 +1,6 @@
 <div class="w-screen h-screen bg-active grid md:flex items-center justify-center">
 
-    <mat-spinner *ngIf="showSpinner" [diameter]="400" [color]="'accent'"></mat-spinner>
+    <mat-spinner *ngIf="showSpinner" [diameter]="400" [color]="'primary'"></mat-spinner>
 
 
     <div *ngIf="!showSpinner" class="grid md:flex bg-light rounded-md">
@@ -38,6 +38,8 @@
                     <div class="flex w-full">
                         <button (click)="login()" [disabled]="loginForm.invalid" mat-button class="bg-primary rounded-full w-full text-lg font-semibold hover:bg-active hover:text-primary text-light">Iniciar Sesión</button>
                     </div>
+
+                    
 
                 </form>
             </div>

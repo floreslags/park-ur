@@ -1,5 +1,177 @@
-<div class="w-fit h-fit grid md:flex bg-active">
+<div class="grid w-full h-full bg-light p-4 overflow-auto">
+    <div class="flex flex-col gap-4">
+        <div class="flex">
+            <span class="text-primary font-semibold">Perfil del cliente</span>
+        </div>
+        <div class="flex gap-4">
+            
+            <div class="flex rounded-md p-2 bg-white">
+                <img class="bg-cover bg-top rounded-full h-16 w-16" src="{{data.cliente.foto}}" alt="">
+            </div>
+            
+            <div class="flex flex-col rounded-sm p-2 bg-white">
 
-    
+                <div class="flex">
+                    <span class="text-primary text-md font-semibold">Información del cliente</span>
+                </div>
 
+                <div class="flex">
+                    <span class="text-primary text-sm"><strong>Cliente: </strong>{{data.cliente.nombres}} {{data.cliente.apellidos}}</span>
+                </div>
+
+                <div class="flex">
+                    <span class="text-primary text-sm"><strong>E-mail: </strong>{{data.cliente.correo}}</span>
+                </div>
+
+                <div class="flex">
+                    <span class="text-primary text-sm"><strong>Teléfono: </strong>{{data.cliente.numero_telefono}}</span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="flex flex-col gap-4">
+
+        <div class="flex flex-col p-2 bg-white rounded-md my-3">
+            <span class="text-primary font-semibold">Vehículos del cliente</span>
+
+            <div class="flex">
+
+                <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
+                    <mat-tab label="Activos">
+
+                        <div class="flex flex-col gap-4 p-2 w-full">
+
+                            <div [ngClass]="{'bg-active':item.activo === '0','bg-primary':item.activo === '1'}" *ngFor="let item of data.coches[1].coches" class="rounded-md p-2 flex items-center justify-center gap-4">
+                                <div class="flex">
+                                    <img class="rounded-full w-10 h-10 bg-cover bg-center" src="{{item.foto}}" alt="">
+                                </div>
+                                <div class="flex flex-col">
+                                    <span class="text-white text-sm font-semibold">Marca:</span>
+                                    <span class="text-white text-sm">{{item.vehiculo}}</span>
+                                </div>
+                                <div class="flex flex-col">
+                                    <span class="text-white text-sm font-semibold">Modelo:</span>
+                                    <span class="text-white text-sm">{{item.modelo}}</span>
+                                </div>
+                                <div class="flex flex-col">
+                                    <span class="text-white text-sm font-semibold">Color:</span>
+                                    <span class="text-white text-sm">{{item.color}}</span>
+                                </div>
+                                <div class="flex flex-col">
+                                    <span class="text-white text-sm font-semibold">Placas:</span>
+                                    <span class="text-white text-sm">{{item.placas}}</span>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </mat-tab>
+                    <mat-tab label="Inactivos">
+                        <div class="flex flex-col gap-4 p-2 w-full">
+
+                            <div [ngClass]="{'bg-active':item.activo === '0','bg-primary':item.activo === '1'}" *ngFor="let item of data.coches[0].coches" class="rounded-md p-2 flex items-center justify-center gap-4">
+                                <div class="flex">
+                                    <img class="rounded-full w-10 h-10 bg-cover bg-center" src="{{item.foto}}" alt="">
+                                </div>
+                                <div class="flex flex-col">
+                                    <span class="text-white text-sm font-semibold">Marca:</span>
+                                    <span class="text-white text-sm">{{item.vehiculo}}</span>
+                                </div>
+                                <div class="flex flex-col">
+                                    <span class="text-white text-sm font-semibold">Modelo:</span>
+                                    <span class="text-white text-sm">{{item.modelo}}</span>
+                                </div>
+                                <div class="flex flex-col">
+                                    <span class="text-white text-sm font-semibold">Color:</span>
+                                    <span class="text-white text-sm">{{item.color}}</span>
+                                </div>
+                                <div class="flex flex-col">
+                                    <span class="text-white text-sm font-semibold">Placas:</span>
+                                    <span class="text-white text-sm">{{item.placas}}</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </mat-tab>
+                  </mat-tab-group>
+
+            </div>
+
+        </div>
+        
+    </div>
+    <div class="flex flex-col gap-4">
+        <div class="flex flex-col">
+            <span class="text-primary font-semibold">Servicios del cliente</span>
+
+            <div class="flex flex-col">
+
+                <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
+                    <mat-tab label="Activos">
+
+                        <div class="flex flex-col gap-4 p-2 w-full">
+
+                            <div *ngFor="let item of data.rentas[0].rentas" class=" bg-primary rounded-md p-2 flex items-center justify-center gap-4">
+                                <div class="flex">
+                                    <img class="rounded-full w-10 h-10 bg-cover bg-center" src="{{item.img_coche}}" alt="">
+                                </div>
+                                <div class="flex flex-col">
+                                    <span class="text-white text-sm font-semibold">Auto:</span>
+                                    <span class="text-white text-sm">{{item.coche}}</span>
+                                </div>
+                                <div class="flex flex-col">
+                                    <span class="text-white text-sm font-semibold">Lugar:</span>
+                                    <span class="text-white text-sm">{{item.lugar}}</span>
+                                </div>
+                                <div class="flex flex-col">
+                                    <span class="text-white text-sm font-semibold">Fecha:</span>
+                                    <span class="text-white text-sm">{{item.fecha}}</span>
+                                </div>
+                                <div class="flex flex-col">
+                                    <span class="text-white text-sm font-semibold">Total:</span>
+                                    <span class="text-white text-sm">${{item.total}}.00 MXN</span>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </mat-tab>
+                    <mat-tab label="Inactivos">
+                    
+                        <div class="flex flex-col gap-4 p-2 w-full overflow-y-auto ">
+
+                            <div *ngFor="let item of data.rentas[1].rentas" class=" bg-active rounded-md p-2 flex items-center justify-center gap-4">
+                                <div class="flex">
+                                    <img class="rounded-full w-10 h-10 bg-cover bg-center" src="{{item.img_coche}}" alt="">
+                                </div>
+                                <div class="flex flex-col">
+                                    <span class="text-white text-sm font-semibold">Auto:</span>
+                                    <span class="text-white text-sm">{{item.coche}}</span>
+                                </div>
+                                <div class="flex flex-col">
+                                    <span class="text-white text-sm font-semibold">Lugar:</span>
+                                    <span class="text-white text-sm">{{item.lugar}}</span>
+                                </div>
+                                <div class="flex flex-col">
+                                    <span class="text-white text-sm font-semibold">Fecha:</span>
+                                    <span class="text-white text-sm">{{item.fecha}}</span>
+                                </div>
+                                <div class="flex flex-col">
+                                    <span class="text-white text-sm font-semibold">Total:</span>
+                                    <span class="text-white text-sm">${{item.total}}.00 MXN</span>
+                                </div>
+                            </div>
+
+                        </div>            
+
+                    </mat-tab>
+                  </mat-tab-group>
+
+            </div>
+
+
+        </div>
+        
+    </div>
 </div>

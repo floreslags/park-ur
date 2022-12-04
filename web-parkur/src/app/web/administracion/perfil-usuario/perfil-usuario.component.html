@@ -1,11 +1,65 @@
-<div class="w-screen h-screen grid md:flex bg-active">
+<div class="bg-white w-fit h-fit grid items-start justify-center p-4 overflow-auto">
+  <span mat-dialog-title class="text-light text-center bg-primary rounded-md p-2">{{data.title}}</span>
 
-    <div class="w-fit">
-        <app-sidebar class="w-full"></app-sidebar>
-    </div>
+  <form [formGroup]="formUsuario" class="w-full p-2">
 
-    <div class="w-full">2</div>
+      <div class="grid grid-cols-3 gap-2">
+          <mat-form-field appearance="outline">
+              <mat-label class="text-primary" >Genero:</mat-label>
+              <input type="text"
+              placeholder="Pick one"
+              aria-label="Number"
+              matInput
+              formControlName="genero_id"
+              [matAutocomplete]="auto">
+              <mat-error class="text-md" *ngIf="formUsuario.get('genero_id')?.hasError('required')">El campo está vacío</mat-error>
+              <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+              <mat-option *ngFor="let option of generos" [value]="option.id">
+                  {{option.genero}}
+              </mat-option>
+              </mat-autocomplete>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+              <mat-label class="text-primary" >Nombre (s):</mat-label>
+              <input type="text" matInput placeholder="Ingrese su nombre o nombres" formControlName="nombres">
+              <mat-error class="text-md" *ngIf="formUsuario.get('nombres')?.hasError('required')">El campo está vacío</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label class="text-primary" >Apellido (S):</mat-label>
+              <input type="text" matInput placeholder="Ingrese su apellido o apellidos" formControlName="apellidos">
+              <mat-error class="text-md" *ngIf="formUsuario.get('apellidos')?.hasError('required')">El campo está vacío</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label class="text-primary">Fecha de nacimiento:</mat-label>
+              <input type="date" matInput formControlName="fecha_nac" class="text-primary">
+            </mat-form-field>
+            
+            <mat-form-field appearance="outline">
+              <mat-label class="text-primary">Número telefónico:</mat-label>
+              <input type="tel" matInput formControlName="numero_telefono" class="text-primary" placeholder="Ex: 555 555 5555">
+              <mat-error class="text-md" *ngIf="formUsuario.get('numero_telefono')?.hasError('required')">El campo está vacío</mat-error>
+          </mat-form-field>
 
-    <div class="w-fit">3</div>
-    
+          <mat-form-field appearance="outline">
+              <mat-label class="text-primary">E-mail:</mat-label>
+              <input type="email" matInput formControlName="correo" class="text-primary" placeholder="Ex: name@mail.com">
+              <mat-error class="text-md" *ngIf="formUsuario.get('correo')?.hasError('email')">El dato ingresado no es válido</mat-error>
+              <mat-error class="text-md" *ngIf="formUsuario.get('correo')?.hasError('required')">El campo está vacío</mat-error>
+            </mat-form-field>
+            
+            <mat-form-field appearance="outline">
+              <mat-label class="text-primary">Contraseña:</mat-label>
+              <input type="password" matInput formControlName="contrasena" class="text-primary" placeholder="Ingrese contraseña">
+              <mat-error class="text-md" *ngIf="formUsuario.get('contrasena')?.hasError('required')">El campo está vacío</mat-error>
+          </mat-form-field>
+      </div>
+
+  </form>
+
+  
+
+  <div class="flex mx-2 justify-between" mat-dialog-actions>
+      <button mat-button (click)="dialogRef.close()">Cancelar</button>
+      <button [disabled]="formUsuario.invalid" mat-button [mat-dialog-close]="formUsuario.value" cdkFocusInitial>{{data.boton}}</button>
+  </div>
 </div>
