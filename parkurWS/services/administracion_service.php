@@ -4,6 +4,8 @@ include_once('../config/db.php');
 include_once('../classes/admin.php');
 include_once('../classes/cliente.php');
 include_once('../classes/renta.php');
+include_once('../classes/genero.php');
+include_once('../classes/coche.php');
 
 
 $opcion = $_GET['opcion'];
@@ -37,6 +39,18 @@ switch ($opcion) {
 
     case 'getRentas':
         echo json_encode(Renta::getRentas());
+        break;
+
+    case 'getRentasUsuario':
+        echo json_encode(Renta::getRentasUsuario($body));
+        break;
+
+    case 'getGeneros':
+        echo json_encode(Genero::getGeneros());
+        break;
+
+    case 'getCochesUsuario':
+        echo json_encode(Coche::getCochesUsuario($body));
         break;
 
 }

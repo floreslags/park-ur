@@ -8,7 +8,7 @@ class Coche extends DB{
         $query = "SELECT * FROM coche WHERE activo = 0";
 
         $output[] = [
-            "seccion"=>"Disponibles",
+            "seccion"=>"disponibles",
             "coches"=>DB::query($query)
         ];
 
@@ -16,7 +16,7 @@ class Coche extends DB{
         $query = "SELECT * FROM coche WHERE activo = 1";
 
         $output[] = [
-            "seccion"=>"Ocupados",
+            "seccion"=>"ocupados",
             "coches"=>DB::query($query)
         ];
 
