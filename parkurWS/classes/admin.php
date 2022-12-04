@@ -146,12 +146,41 @@ class Admin extends DB{
     }
 
     public static function getUsuarios(){
+
+        #SE EXTRAEN TODOS LOS USUARIOS TIPO ADMIN
+        $query = "SELECT *
+        FROM usuario
+        INNER JOIN perfil ON usuario.id = perfil.usuario_id
+        WHERE perfil.superadmin = 1";
+
+        $data[] = [
+            "tipo"=>"Todos",
+            "usuarios"=>DB::query($query)
+        ];
+
+        #SE EXTRAEN TODOS LOS USUARIOS TIPO ADMIN ACTIVOS
         $query = "SELECT *
         FROM usuario
         INNER JOIN perfil ON usuario.id = perfil.usuario_id
         WHERE perfil.superadmin = 1 AND perfil.eliminado = 0";
 
-        return DB::query($query);
+        $data[] = [
+            "tipo"=>"Activos",
+            "usuarios"=>DB::query($query)
+        ];
+
+        #SE EXTRAEN TODOS LOS USUARIOS TIPO ADMIN INACTIVOS
+        $query = "SELECT *
+        FROM usuario
+        INNER JOIN perfil ON usuario.id = perfil.usuario_id
+        WHERE perfil.superadmin = 1 AND perfil.eliminado = 1";
+
+        $data[] = [
+            "tipo"=>"Expirados",
+            "usuarios"=>DB::query($query)
+        ];
+
+        return $data;
     }
 
     public static function getUsuario($data){

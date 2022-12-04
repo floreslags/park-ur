@@ -4,20 +4,43 @@ class Renta extends DB{
 
     public static function getRentas(){
 
-        // VIGENTES
+        #TODAS LAS RENTAS
         $query = "
         SELECT 
-            rentas.id id, 
-            usuario.id usuario_id, 
-            rentas.estacionamiento_id estacionamiento_id,
-            DATE(rentas.inicio) fecha, 
-            estacionamiento.lugar lugar, 
-            CONCAT(coche.vehiculo,' ',coche.modelo,' ',coche.ano,' ',coche.color) coche, 
-            coche.foto img_coche, 
-            CONCAT(usuario.nombres,' ',usuario.apellidos) cliente, 
-            usuario.foto img_cliente, 
-            servicios.tipo servicio, 
-            rentas.monto total
+            DATE(rentas.inicio) inicio,
+            DATE(rentas.last_update) fin,
+            CONCAT(usuario.nombres,' ',usuario.apellidos) cliente,
+            usuario.foto img_cliente,
+            CONCAT(coche.vehiculo,' ',coche.modelo,' ',coche.color, ' ', coche.ano) auto,
+            coche.foto img_coche,
+            estacionamiento.lugar lugar,
+            servicios.tipo servicio,
+            rentas.monto monto,
+            rentas.status estado
+        FROM rentas
+        INNER JOIN coche ON coche.id = rentas.coche_id
+        INNER JOIN usuario ON coche.usuario_id = usuario.id
+        INNER JOIN estacionamiento ON rentas.estacionamiento_id = estacionamiento.id
+        INNER JOIN servicios ON rentas.servicios_id = servicios.id";
+
+        $output[] = [
+            "seccion"=>"todas",
+            "rentas"=>DB::query($query)
+        ];
+
+        #RENTAS ACTIVAS
+        $query = "
+        SELECT 
+            DATE(rentas.inicio) inicio,
+            DATE(rentas.last_update) fin,
+            CONCAT(usuario.nombres,' ',usuario.apellidos) cliente,
+            usuario.foto img_cliente,
+            CONCAT(coche.vehiculo,' ',coche.modelo,' ',coche.color, ' ', coche.ano) auto,
+            coche.foto img_coche,
+            estacionamiento.lugar lugar,
+            servicios.tipo servicio,
+            rentas.monto monto,
+            rentas.status estado
         FROM rentas
         INNER JOIN coche ON coche.id = rentas.coche_id
         INNER JOIN usuario ON coche.usuario_id = usuario.id
@@ -26,25 +49,23 @@ class Renta extends DB{
         WHERE rentas.status = 1";
 
         $output[] = [
-            "seccion"=>"vigentes",
+            "seccion"=>"activas",
             "rentas"=>DB::query($query)
         ];
 
-        // EXPIRADAS
+        #RENTAS ACTIVAS
         $query = "
         SELECT 
-            rentas.id id, 
-            usuario.id usuario_id, 
-            usuario.id usuario_id, 
-            rentas.estacionamiento_id estacionamiento_id,
-            DATE(rentas.inicio) fecha, 
-            estacionamiento.lugar lugar, 
-            CONCAT(coche.vehiculo,' ',coche.modelo,' ',coche.ano,' ',coche.color) coche, 
-            coche.foto img_coche, 
-            CONCAT(usuario.nombres,' ',usuario.apellidos) cliente, 
-            usuario.foto img_cliente, 
-            servicios.tipo servicio, 
-            rentas.monto total
+            DATE(rentas.inicio) inicio,
+            DATE(rentas.last_update) fin,
+            CONCAT(usuario.nombres,' ',usuario.apellidos) cliente,
+            usuario.foto img_cliente,
+            CONCAT(coche.vehiculo,' ',coche.modelo,' ',coche.color, ' ', coche.ano) auto,
+            coche.foto img_coche,
+            estacionamiento.lugar lugar,
+            servicios.tipo servicio,
+            rentas.monto monto,
+            rentas.status estado
         FROM rentas
         INNER JOIN coche ON coche.id = rentas.coche_id
         INNER JOIN usuario ON coche.usuario_id = usuario.id
@@ -56,7 +77,6 @@ class Renta extends DB{
             "seccion"=>"expiradas",
             "rentas"=>DB::query($query)
         ];
-
 
         return $output;
     }

@@ -1,0 +1,24 @@
+<div class="bg-active w-fit h-fit p-4 flex flex-col gap-4">
+
+    <div *ngIf="data" lass="flex flex-col gap-4">
+
+        <div class="flex justify-between gap-4 items-center">
+            <img class="h-16 w-16 rounded-full p-2 border-2 border-primary" src="{{data.img_cliente}}">
+            <span class="text-primary text-lg">Cliente: <strong>{{data.cliente}}</strong></span>
+        </div>
+        <div class="flex justify-between gap-4 items-center">
+            <img class="h-16 w-16 rounded-full p-2 border-2 border-primary" src="{{data.img_coche}}">
+            <span class="text-primary text-lg">Vehículo: <strong>{{data.coche}}</strong></span>
+        </div>
+        <div class="flex justify-between gap-4 items-center">
+            <span class="text-primary text-lg">Tipo de servicio: <strong>{{data.servicio}}</strong></span>
+            <span class="text-primary text-lg">Monto parcial:  <strong>${{data.total}}.00 MXN</strong></span>
+        </div>
+
+    </div>
+
+    <div *ngIf="!data"  class="flex">
+        <span class="text-primary text-2xl font-bold">El lugar está diponible</span>
+    </div>
+
+</div>

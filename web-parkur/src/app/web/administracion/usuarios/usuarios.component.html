@@ -1,1 +1,351 @@
-<p>usuarios works!</p>
+<div class="w-screen h-screen grid md:flex bg-active">
+
+  <div class="w-fit flex">
+    <app-sidebar *ngIf="menu" class="w-full"></app-sidebar>
+    <mat-icon (click)="showMenu()" class="text-primary text-4xl">menu</mat-icon>
+</div>
+
+    <div class="w-full flex flex-col gap-4 p-4">
+
+        <div class="flex">
+            <span class="text-primary text-2xl font-bold">Usuarios</span>
+        </div>
+
+        <div class="flex p-4 bg-white h-full rounded-lg">
+
+            <mat-tab-group class="w-full" mat-align-tabs="center">
+
+                <mat-tab >
+                    <ng-template mat-tab-label class="w-ful">
+
+                        <div class="flex items-center justify-between p-2 w-full hover:bg-primary rounded-md">
+                            <span class="text-primary text-xl font-semibold hover:text-white">Todos</span>
+                        </div>
+                    </ng-template>
+
+                    <!--TABLA TODOS-->
+                    <div class="flex flex-col w-full bg-white rounded-lg p-4 h-full">
+                        <div class="flex justify-end">
+                            <button mat-button class="p-2 bg-primary text-white">Nuevo</button>
+                        </div>
+
+                        <mat-form-field>
+                            <mat-label>Filter</mat-label>
+                            <input matInput (keyup)="applyFilter($event)" placeholder="Ingrese el usuario" #input>
+                          </mat-form-field>
+
+                          <table mat-table [dataSource]="dataUsuarios" class="mat-elevation-z8 w-full h-full" matSort>
+
+                            <!--- Note that these columns can be defined in any order.
+                                  The actual rendered columns are set as a property on the row definition" -->
+                          
+                            <!-- Position Column -->
+                            <ng-container matColumnDef="usuario">
+                              <th mat-header-cell *matHeaderCellDef> Usuario </th>
+                              <td mat-cell *matCellDef="let element">
+                                <a class="p-2 rounded-md flex items-center gap-x-4">
+                                    <img class="w-16 h-16 rounded-full bg-cover bg-center" src="{{element.foto}}" alt="">
+                                    <span class="text-primary text-md">{{element.nombres}} {{element.apellidos}}</span>
+                                </a>
+                              </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="nacimiento">
+                              <th mat-header-cell *matHeaderCellDef> Fecha de nacimiento </th>
+                              <td mat-cell *matCellDef="let element">
+                                <a class="p-2 rounded-md flex items-center gap-x-4">
+                                    <span class="text-primary text-md">{{element.fecha_nac}}</span>
+                                </a>
+                              </td>
+                            </ng-container>
+                          
+                            <!-- Name Column -->
+                            <ng-container matColumnDef="telefono" >
+                              <th mat-header-cell *matHeaderCellDef mat-sort-header> Telefono </th>
+                              <td mat-cell *matCellDef="let element">
+                                <a class="p-2 rounded-md flex items-center gap-x-4">
+                                    <span class="text-primary text-md">{{element.numero_telefono}}</span>
+                                </a>
+                                </td>
+                            </ng-container>
+                          
+                            <!-- Weight Column -->
+                            <ng-container matColumnDef="correo">
+                              <th mat-header-cell *matHeaderCellDef mat-sort-header> Correo </th>
+                              <td mat-cell *matCellDef="let element">
+                                <a class="p-2 rounded-md flex items-center gap-x-4">
+                                    <span class="text-primary text-md">{{element.correo}}</span>
+                                </a>
+                              </td>
+                            </ng-container>
+                          
+                            <!-- Symbol Column -->
+                            <ng-container matColumnDef="status">
+                              <th mat-header-cell *matHeaderCellDef> Status </th>
+                              <td mat-cell *matCellDef="let element">
+                                <a class="p-2 rounded-md flex items-center gap-x-4">
+                                  <mat-icon *ngIf="element.eliminado === '0'" class="text-2xl text-green-700">check</mat-icon>
+                                  <mat-icon *ngIf="element.eliminado === '1'" class="text-2xl text-pink-700">cancel</mat-icon>
+                              </a>
+                              </td>
+                            </ng-container>
+                        
+                            <ng-container matColumnDef="acciones">
+                              <th mat-header-cell *matHeaderCellDef> Acciones</th>
+                              <td mat-cell *matCellDef="let element, let i = index">
+
+                                <div class="rounded-md flex items-center gap-x-4">
+
+                                  <a class="p-2 rounded-md hover:bg-primary flex items-center justify-center">
+                                    <mat-icon class="text-amber-500" matTooltip="Editar Usuario">edit</mat-icon>
+                                  </a>
+                                  <a class="p-2 rounded-md hover:bg-primary flex items-center justify-center">
+                                    <mat-icon class="text-pink-500" matTooltip="Eliminar Usuario">delete</mat-icon>
+                                  </a>
+                                </div>
+                        
+                                
+                              </td>
+                            </ng-container>
+                          
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                          </table>
+
+                          <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                          showFirstLastButtons
+                          aria-label="Select page of periodic elements">
+                        </mat-paginator>
+                        
+                        <span *ngIf="usuarios.length===0" class="text-indigo-900 text-3xl">No hay registro de usuarios</span>
+                        
+                    </div>
+                    <!--TABLA TODOS-->
+
+
+                </mat-tab>
+
+                <mat-tab >
+                    <ng-template mat-tab-label class="w-ful">
+                        <div class="flex items-center justify-between p-2 w-full hover:bg-primary rounded-md">
+                            <span class="text-primary text-xl font-semibold hover:text-white">Vigentes</span>
+                        </div>
+                    </ng-template>
+
+                                        <!--TABLA ACTIVOS-->
+                                        <div class="flex flex-col w-full bg-white rounded-lg p-4 h-full">
+                                          <div class="flex justify-end">
+                                              <button mat-button class="p-2 bg-primary text-white">Nuevo</button>
+                                          </div>
+                  
+                                          <mat-form-field>
+                                              <mat-label>Filter</mat-label>
+                                              <input matInput (keyup)="applyFilter($event)" placeholder="Ingrese el usuario" #input>
+                                            </mat-form-field>
+                  
+                                            <table mat-table [dataSource]="dataActivos" class="mat-elevation-z8 w-full h-full" matSort>
+
+                                              <!--- Note that these columns can be defined in any order.
+                                                    The actual rendered columns are set as a property on the row definition" -->
+                                            
+                                              <!-- Position Column -->
+                                              <ng-container matColumnDef="usuario">
+                                                <th mat-header-cell *matHeaderCellDef> Usuario </th>
+                                                <td mat-cell *matCellDef="let element">
+                                                  <a class="p-2 rounded-md flex items-center gap-x-4">
+                                                      <img class="w-16 h-16 rounded-full bg-cover bg-center" src="{{element.foto}}" alt="">
+                                                      <span class="text-primary text-md">{{element.nombres}} {{element.apellidos}}</span>
+                                                  </a>
+                                                </td>
+                                              </ng-container>
+                  
+                                              <ng-container matColumnDef="nacimiento">
+                                                <th mat-header-cell *matHeaderCellDef> Fecha de nacimiento </th>
+                                                <td mat-cell *matCellDef="let element">
+                                                  <a class="p-2 rounded-md flex items-center gap-x-4">
+                                                      <span class="text-primary text-md">{{element.fecha_nac}}</span>
+                                                  </a>
+                                                </td>
+                                              </ng-container>
+                                            
+                                              <!-- Name Column -->
+                                              <ng-container matColumnDef="telefono" >
+                                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Telefono </th>
+                                                <td mat-cell *matCellDef="let element">
+                                                  <a class="p-2 rounded-md flex items-center gap-x-4">
+                                                      <span class="text-primary text-md">{{element.numero_telefono}}</span>
+                                                  </a>
+                                                  </td>
+                                              </ng-container>
+                                            
+                                              <!-- Weight Column -->
+                                              <ng-container matColumnDef="correo">
+                                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Correo </th>
+                                                <td mat-cell *matCellDef="let element">
+                                                  <a class="p-2 rounded-md flex items-center gap-x-4">
+                                                      <span class="text-primary text-md">{{element.correo}}</span>
+                                                  </a>
+                                                </td>
+                                              </ng-container>
+                                            
+                                              <!-- Symbol Column -->
+                                              <ng-container matColumnDef="status">
+                                                <th mat-header-cell *matHeaderCellDef> Status </th>
+                                                <td mat-cell *matCellDef="let element">
+                                                  <a class="p-2 rounded-md flex items-center gap-x-4">
+                                                    <mat-icon *ngIf="element.eliminado === '0'" class="text-2xl text-green-700">check</mat-icon>
+                                                    <mat-icon *ngIf="element.eliminado === '1'" class="text-2xl text-pink-700">cancel</mat-icon>
+                                                </a>
+                                                </td>
+                                              </ng-container>
+                                          
+                                              <ng-container matColumnDef="acciones">
+                                                <th mat-header-cell *matHeaderCellDef> Acciones</th>
+                                                <td mat-cell *matCellDef="let element, let i = index">
+                  
+                                                  <div class="rounded-md flex items-center gap-x-4">
+                  
+                                                    <a class="p-2 rounded-md hover:bg-primary flex items-center justify-center">
+                                                      <mat-icon class="text-amber-500" matTooltip="Editar Usuario">edit</mat-icon>
+                                                    </a>
+                                                    <a class="p-2 rounded-md hover:bg-primary flex items-center justify-center">
+                                                      <mat-icon class="text-pink-500" matTooltip="Eliminar Usuario">delete</mat-icon>
+                                                    </a>
+                                                  </div>
+                                          
+                                                  
+                                                </td>
+                                              </ng-container>
+                                            
+                                              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                                            </table>
+                  
+                                            <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                                            showFirstLastButtons
+                                            aria-label="Select page of periodic elements">
+                                          </mat-paginator>
+                                          
+                                          <span *ngIf="activos.length===0" class="text-indigo-900 text-3xl">No hay registro de usuarios</span>
+                                          
+                                      </div>
+                                      <!--TABLA ACTIVOS-->
+
+                </mat-tab>
+
+                <mat-tab >
+                    <ng-template mat-tab-label class="w-ful">
+                        <div class="flex items-center justify-between p-2 w-full hover:bg-primary rounded-md">
+                            <span class="text-primary text-xl font-semibold hover:text-white">Expirados</span>
+                        </div>
+                    </ng-template>
+
+                    <!--TABLA EXPIRADOS-->
+                    <div class="flex flex-col w-full bg-white rounded-lg p-4 h-full">
+                      <div class="flex justify-end">
+                          <button mat-button class="p-2 bg-primary text-white">Nuevo</button>
+                      </div>
+
+                      <mat-form-field>
+                          <mat-label>Filter</mat-label>
+                          <input matInput (keyup)="applyFilter($event)" placeholder="Ingrese el usuario" #input>
+                        </mat-form-field>
+
+                        <table mat-table [dataSource]="dataExpirados" class="mat-elevation-z8 w-full h-full" matSort>
+
+                          <!--- Note that these columns can be defined in any order.
+                                The actual rendered columns are set as a property on the row definition" -->
+                        
+                          <!-- Position Column -->
+                          <ng-container matColumnDef="usuario">
+                            <th mat-header-cell *matHeaderCellDef> Usuario </th>
+                            <td mat-cell *matCellDef="let element">
+                              <a class="p-2 rounded-md flex items-center gap-x-4">
+                                  <img class="w-16 h-16 rounded-full bg-cover bg-center" src="{{element.foto}}" alt="">
+                                  <span class="text-primary text-md">{{element.nombres}} {{element.apellidos}}</span>
+                              </a>
+                            </td>
+                          </ng-container>
+
+                          <ng-container matColumnDef="nacimiento">
+                            <th mat-header-cell *matHeaderCellDef> Fecha de nacimiento </th>
+                            <td mat-cell *matCellDef="let element">
+                              <a class="p-2 rounded-md flex items-center gap-x-4">
+                                  <span class="text-primary text-md">{{element.fecha_nac}}</span>
+                              </a>
+                            </td>
+                          </ng-container>
+                        
+                          <!-- Name Column -->
+                          <ng-container matColumnDef="telefono" >
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Telefono </th>
+                            <td mat-cell *matCellDef="let element">
+                              <a class="p-2 rounded-md flex items-center gap-x-4">
+                                  <span class="text-primary text-md">{{element.numero_telefono}}</span>
+                              </a>
+                              </td>
+                          </ng-container>
+                        
+                          <!-- Weight Column -->
+                          <ng-container matColumnDef="correo">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Correo </th>
+                            <td mat-cell *matCellDef="let element">
+                              <a class="p-2 rounded-md flex items-center gap-x-4">
+                                  <span class="text-primary text-md">{{element.correo}}</span>
+                              </a>
+                            </td>
+                          </ng-container>
+                        
+                          <!-- Symbol Column -->
+                          <ng-container matColumnDef="status">
+                            <th mat-header-cell *matHeaderCellDef> Status </th>
+                            <td mat-cell *matCellDef="let element">
+                              <a class="p-2 rounded-md flex items-center gap-x-4">
+                                <mat-icon *ngIf="element.eliminado === '0'" class="text-2xl text-green-700">check</mat-icon>
+                                <mat-icon *ngIf="element.eliminado === '1'" class="text-2xl text-pink-700">cancel</mat-icon>
+                            </a>
+                            </td>
+                          </ng-container>
+                      
+                          <ng-container matColumnDef="acciones">
+                            <th mat-header-cell *matHeaderCellDef> Acciones</th>
+                            <td mat-cell *matCellDef="let element, let i = index">
+
+                              <div class="rounded-md flex items-center gap-x-4">
+
+                                <a class="p-2 rounded-md hover:bg-primary flex items-center justify-center">
+                                  <mat-icon class="text-amber-500" matTooltip="Editar Usuario">edit</mat-icon>
+                                </a>
+                                <a class="p-2 rounded-md hover:bg-primary flex items-center justify-center">
+                                  <mat-icon class="text-pink-500" matTooltip="Eliminar Usuario">delete</mat-icon>
+                                </a>
+                              </div>
+                      
+                              
+                            </td>
+                          </ng-container>
+                        
+                          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                        </table>
+
+                        <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                        showFirstLastButtons
+                        aria-label="Select page of periodic elements">
+                      </mat-paginator>
+                      
+                      <span *ngIf="expirados.length===0" class="text-indigo-900 text-3xl">No hay registro de usuarios</span>
+                      
+                  </div>
+                  <!--TABLA TODOS-->
+
+                </mat-tab>
+
+
+            </mat-tab-group>            
+
+        </div>
+
+    </div>
+
+</div>

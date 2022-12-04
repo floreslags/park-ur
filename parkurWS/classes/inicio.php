@@ -78,6 +78,7 @@ class Inicio extends DB{
         rentas.estacionamiento_id estacionamiento_id,
         DATE(rentas.inicio) fecha, 
         estacionamiento.lugar lugar, 
+        estacionamiento.status estatus, 
         CONCAT(coche.vehiculo,' ',coche.modelo,' ',coche.ano,' ',coche.color) coche, 
         coche.foto img_coche, 
         CONCAT(usuario.nombres,' ',usuario.apellidos) cliente, 
@@ -88,7 +89,8 @@ class Inicio extends DB{
         INNER JOIN coche ON coche.id = rentas.coche_id
         INNER JOIN usuario ON coche.usuario_id = usuario.id
         INNER JOIN estacionamiento ON rentas.estacionamiento_id = estacionamiento.id
-        INNER JOIN servicios ON rentas.servicios_id = servicios.id";
+        INNER JOIN servicios ON rentas.servicios_id = servicios.id
+        WHERE rentas.status = 1 AND estacionamiento.status = 1";
 
         return DB::query($query);
 
@@ -101,6 +103,7 @@ class Inicio extends DB{
         rentas.estacionamiento_id estacionamiento_id,
         DATE(rentas.inicio) fecha, 
         estacionamiento.lugar lugar, 
+        estacionamiento.status estatus, 
         CONCAT(coche.vehiculo,' ',coche.modelo,' ',coche.ano,' ',coche.color) coche, 
         coche.foto img_coche, 
         CONCAT(usuario.nombres,' ',usuario.apellidos) cliente, 
@@ -112,9 +115,20 @@ class Inicio extends DB{
         INNER JOIN usuario ON coche.usuario_id = usuario.id
         INNER JOIN estacionamiento ON rentas.estacionamiento_id = estacionamiento.id
         INNER JOIN servicios ON rentas.servicios_id = servicios.id
-        WHERE usuario.id = '$data->usuario_id'";
+        WHERE rentas.status = 1 AND estacionamiento.status = 1 AND estacionamiento.lugar = '$data->lugar'";
 
-        return DB::query($query);
+        $renta = DB::query($query);
+
+        if(empty($renta)){
+            $output['error'] = true;
+            $output['renta'] = "El lugar está disponible";
+        }else{
+            $output['error'] = false;
+            $output['renta'] = $renta[0];
+        }
+
+        return $output;
+        //return $query;
 
     }
 

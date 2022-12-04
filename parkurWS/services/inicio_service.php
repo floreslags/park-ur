@@ -16,5 +16,9 @@ switch ($opcion) {
         echo json_encode(Inicio::getRentas());
         break;
 
+    case 'getRenta':
+        echo json_encode(Inicio::getRenta($body));
+        break;
+
 }
 ?>

@@ -11,7 +11,7 @@ class Cliente extends DB{
         WHERE perfil.superadmin = 0";
 
         $output[] = [
-            "seccion"=>"Todos",
+            "tipo"=>"Todos",
             "clientes"=>DB::query($query)
         ];
 
@@ -22,7 +22,7 @@ class Cliente extends DB{
         WHERE perfil.superadmin = 0 AND perfil.eliminado = 0";
 
         $output[] = [
-            "seccion"=>"Activos",
+            "tipo"=>"Activos",
             "clientes"=>DB::query($query)
         ];
 
@@ -33,7 +33,7 @@ class Cliente extends DB{
         WHERE perfil.superadmin = 0 AND perfil.eliminado = 1";
 
         $output[] = [
-            "seccion"=>"Inactivos",
+            "tipo"=>"Inactivos",
             "clientes"=>DB::query($query)
         ];
 

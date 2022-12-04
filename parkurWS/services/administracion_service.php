@@ -2,6 +2,8 @@
 
 include_once('../config/db.php');
 include_once('../classes/admin.php');
+include_once('../classes/cliente.php');
+include_once('../classes/renta.php');
 
 
 $opcion = $_GET['opcion'];
@@ -27,6 +29,14 @@ switch ($opcion) {
 
     case 'deleteUsuario':
         echo json_encode(Admin::deleteUsuario($body));
+        break;
+
+    case 'getClientes':
+        echo json_encode(Cliente::getClientes());
+        break;
+
+    case 'getRentas':
+        echo json_encode(Renta::getRentas());
         break;
 
 }

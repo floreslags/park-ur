@@ -1,1 +1,68 @@
-<p>sidebar works!</p>
+<div class="h-screen p-4 bg-primary rounded-md flex flex-col justify-between gap-4">
+
+<div class="flex flex-col gap-8">
+
+    <div class="flex items-center justify-center">
+        <a href="/web">
+            <img class="w-32" src="/assets/images/shared/01-logo.png" alt="">
+        </a>
+    </div>
+
+    <div class="flex">
+        <mat-accordion>
+
+            <a href="/web/inicio" class="flex w-full hover:bg-active rounded-md justify-between p-2">
+                <span class="text-white text-md">Inicio</span>
+                <mat-icon class="text-white text-md">home</mat-icon>
+            </a>
+    
+            <mat-expansion-panel class="bg-transparent" (opened)="true" (closed)="false">
+              <mat-expansion-panel-header>
+                <mat-panel-title class="bg-transparent text-white">Administración</mat-panel-title>
+              </mat-expansion-panel-header>
+            
+            <a href="/web/administracion/usuarios" class="flex w-full hover:bg-active rounded-md justify-between p-2">              
+                <span class="text-white text-md">Usuarios</span>
+                <mat-icon class="text-white text-md">group</mat-icon>
+            </a>
+
+            <a href="/web/administracion/clientes" class="flex w-full hover:bg-active rounded-md justify-between p-2">              
+                <span class="text-white text-md">Clientes</span>
+                <mat-icon class="text-white text-md">groups</mat-icon>
+            </a>
+        </mat-expansion-panel>
+        
+        <mat-expansion-panel class="bg-transparent" (opened)="true" (closed)="false">
+            <mat-expansion-panel-header>
+                <mat-panel-title class="bg-transparent text-white">Reportes</mat-panel-title>
+              </mat-expansion-panel-header>
+              
+              <a href="/web/reportes/rentas" class="flex w-full hover:bg-active rounded-md justify-between p-2">              
+                  <span class="text-white text-md">Rentas</span>
+                  <mat-icon class="text-white text-md">style</mat-icon>
+              </a>
+
+              <a href="/web/reportes/bitacora" class="flex w-full hover:bg-active rounded-md justify-between p-2">              
+                  <span class="text-white text-md">Bitácora</span>
+                  <mat-icon class="text-white text-md">book</mat-icon>
+              </a>
+
+            </mat-expansion-panel>
+    
+        </mat-accordion>
+    </div>
+</div>
+
+<div class="flex flex-col p-2 gap-4">
+
+    <a href="/web/administracion/perfil-usuario">
+        <div class="flex flex-col items-center justify-center gap-4">
+            <img class="h-16 rounded-full w-16 bg-cover bg-center p-2 border border-1 border-white" src="{{usuario.foto}}" alt="">
+            <span class="text-white font-bold text-md">{{usuario.nombres}} {{usuario.apellidos}}</span>
+        </div>
+    </a>
+
+    <button (click)="salir()" mat-button class="bg-white rounded-md p-2 w-full text-primary hover:bg-active">Salir</button>
+</div>
+
+</div>

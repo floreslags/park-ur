@@ -1,1 +1,47 @@
-<p>sign-in works!</p>
+<div class="w-screen h-screen bg-active grid md:flex items-center justify-center">
+
+    <mat-spinner *ngIf="showSpinner" [diameter]="400" [color]="'accent'"></mat-spinner>
+
+
+    <div *ngIf="!showSpinner" class="grid md:flex bg-light rounded-md">
+
+        <div class="flex rounded-md md:rounded-r-md bg-primary p-8">
+            <div class="flex flex-col items-center justify-center gap-4">
+                <img class="h-24" src="/assets/images/shared/01-logo.png" alt="">
+                <span class="text-3xl font-lobster text-light">¡Bienvenido!</span>
+            </div>
+        </div>
+
+        <div class="flex flex-col rounded-md p-4 gap-4">
+
+            <div class="flex">
+                <span class="text-lg text-primary">Para continuar <strong>inicia sesión</strong></span>
+            </div>
+            <div class="flex">
+
+                <form [formGroup]="loginForm" class="flex flex-col gap-4"> 
+                    <mat-form-field appearance="outline">
+                        <mat-label class="text-primary text-lg">Usuario</mat-label>
+                        <input formControlName="correo" class="border border-primary text-primary" matInput type="email" placeholder="ex: nombre@email.com">
+                        <mat-error class="text-md" *ngIf="loginForm.get('correo')?.hasError('email')">El dato ingresado no es válido</mat-error>
+                        <mat-error class="text-md" *ngIf="loginForm.get('correo')?.hasError('required')">El campo está vacío</mat-error>
+                        <mat-icon matSuffix class="text-md text-primary">person</mat-icon>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label class="text-primary text-lg">Contraseña</mat-label>
+                        <input formControlName="contrasena" class="border border-primary text-primary" matInput type="password" placeholder="Ingrese su contraseña">
+                        <mat-error class="text-md" *ngIf="loginForm.get('contrasena')?.hasError('required')">El campo está vacío</mat-error>
+                        <mat-icon matSuffix class="text-md text-primary">key</mat-icon>
+                    </mat-form-field>
+
+                    <div class="flex w-full">
+                        <button (click)="login()" [disabled]="loginForm.invalid" mat-button class="bg-primary rounded-full w-full text-lg font-semibold hover:bg-active hover:text-primary text-light">Iniciar Sesión</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
