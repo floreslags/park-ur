@@ -55,12 +55,10 @@
 
 <div class="flex flex-col p-2 gap-4">
 
-    <a href="/web/administracion/perfil-usuario">
-        <div class="flex flex-col items-center justify-center gap-4">
-            <img class="h-16 rounded-full w-16 bg-cover bg-center p-2 border border-1 border-white" src="{{usuario.foto}}" alt="">
-            <span class="text-white font-bold text-md">{{usuario.nombres}} {{usuario.apellidos}}</span>
-        </div>
-    </a>
+    <div class="flex flex-col items-center justify-center gap-4">
+        <img class="h-16 rounded-full w-16 bg-cover bg-center p-2 border border-1 border-white" src="{{usuario.foto}}" alt="">
+        <span class="text-white font-bold text-md">{{usuario.nombres}} {{usuario.apellidos}}</span>
+    </div>
 
     <button (click)="salir()" mat-button class="bg-white rounded-md p-2 w-full text-primary hover:bg-active">Salir</button>
 </div>
